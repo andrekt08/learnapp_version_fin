@@ -3,7 +3,6 @@ import 'package:education_app_ui/data/mock_data.dart';
 import 'package:education_app_ui/models/category_model.dart';
 import 'package:education_app_ui/models/course_model.dart';
 import 'package:education_app_ui/models/video_model.dart';
-import 'package:flutter/material.dart';
 
 class DatabaseService {
   final String? uid;
@@ -12,12 +11,12 @@ class DatabaseService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // Collection references
-  final CollectionReference courseCollection =
-      FirebaseFirestore.instance.collection('courses');
-  final CollectionReference categoryCollection =
-      FirebaseFirestore.instance.collection('categories');
-  final CollectionReference userCollection =
-      FirebaseFirestore.instance.collection('users');
+  final CollectionReference courseCollection = FirebaseFirestore.instance
+      .collection('courses');
+  final CollectionReference categoryCollection = FirebaseFirestore.instance
+      .collection('categories');
+  final CollectionReference userCollection = FirebaseFirestore.instance
+      .collection('users');
 
   // Get courses stream
   Stream<List<Course>> get courses {
@@ -36,23 +35,23 @@ class DatabaseService {
 
   // Update user data
   Future<void> updateUserData(String email) async {
-    return await userCollection.doc(uid).set({
-      'email': email,
-      'progress': {},
-    });
+    return await userCollection.doc(uid).set({'email': email, 'progress': {}});
   }
 
   // Update user progress
   Future<void> updateUserProgress(
-      String courseName, String videoTitle, bool isCompleted) async {
+    String courseName,
+    String videoTitle,
+    bool isCompleted,
+  ) async {
     DocumentReference userDoc = userCollection.doc(uid);
     if (isCompleted) {
       return await userDoc.update({
-        'progress.$courseName': FieldValue.arrayUnion([videoTitle])
+        'progress.$courseName': FieldValue.arrayUnion([videoTitle]),
       });
     } else {
       return await userDoc.update({
-        'progress.$courseName': FieldValue.arrayRemove([videoTitle])
+        'progress.$courseName': FieldValue.arrayRemove([videoTitle]),
       });
     }
   }
@@ -113,11 +112,13 @@ class DatabaseService {
         'rating': course.rating,
         'videoCount': course.videoCount,
         'videos': course.videos
-            .map((video) => {
-                  'title': video.title,
-                  'duration': video.duration,
-                  'isCompleted': video.isCompleted,
-                })
+            .map(
+              (video) => {
+                'title': video.title,
+                'duration': video.duration,
+                'isCompleted': video.isCompleted,
+              },
+            )
             .toList(),
       });
     }

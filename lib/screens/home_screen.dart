@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
         StreamProvider<DocumentSnapshot?>.value(
           value: DatabaseService(uid: user?.uid).userProgress,
           initialData: null,
-        )
+        ),
       ],
       child: const _HomePageView(),
     );
@@ -50,7 +50,8 @@ class _HomePageView extends StatelessWidget {
 
     if (userProgress != null && userProgress.exists && courses.isNotEmpty) {
       final progressData = userProgress.data() as Map<String, dynamic>;
-      final progressMap = progressData['progress'] as Map<String, dynamic>? ?? {};
+      final progressMap =
+          progressData['progress'] as Map<String, dynamic>? ?? {};
 
       for (var course in courses) {
         if (progressMap.containsKey(course.name)) {
@@ -58,7 +59,7 @@ class _HomePageView extends StatelessWidget {
           final nextVideo = course.videos.firstWhere(
             (video) => !completedVideos.contains(video.title),
             orElse: () =>
-                const Video(title: 'null', duration: 'null'), // Workaround for orElse
+                Video(title: 'null', duration: 'null'), // Workaround for orElse
           );
 
           if (nextVideo.title != 'null') {
@@ -80,10 +81,7 @@ class _HomePageView extends StatelessWidget {
               children: [
                 const Text(
                   "Hi, Programmer",
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                 ),
                 Row(
                   children: [
@@ -94,14 +92,16 @@ class _HomePageView extends StatelessWidget {
                         await DatabaseService().uploadMockData();
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                              content:
-                                  Text('Mock data uploaded to Firestore!')),
+                            content: Text('Mock data uploaded to Firestore!'),
+                          ),
                         );
                       },
                     ),
                     IconButton(
-                      icon: const Icon(Icons.notifications_none_outlined,
-                          size: 30),
+                      icon: const Icon(
+                        Icons.notifications_none_outlined,
+                        size: 30,
+                      ),
                       onPressed: () {},
                     ),
                   ],
@@ -138,10 +138,7 @@ class _HomePageView extends StatelessWidget {
             const SizedBox(height: 30),
             const Text(
               "Categories",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 15),
             SizedBox(
@@ -163,10 +160,13 @@ class _HomePageView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Icon(
-                              IconData(category.iconCodepoint,
-                                  fontFamily: 'MaterialIcons'),
-                              color: Colors.white,
-                              size: 35),
+                            IconData(
+                              category.iconCodepoint,
+                              fontFamily: 'MaterialIcons',
+                            ),
+                            color: Colors.white,
+                            size: 35,
+                          ),
                         ),
                         const SizedBox(height: 10),
                         Text(
@@ -188,19 +188,17 @@ class _HomePageView extends StatelessWidget {
               children: [
                 const Text(
                   "Courses",
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 TextButton(
                   onPressed: () {},
                   child: Text(
                     "See All",
                     style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Theme.of(context).colorScheme.primary),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ),
                 ),
               ],
@@ -284,9 +282,13 @@ class _HomePageView extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.assignment), label: 'Courses'),
+            icon: Icon(Icons.assignment),
+            label: 'Courses',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: 'Wishlist'),
+            icon: Icon(Icons.favorite),
+            label: 'Wishlist',
+          ),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
         ],
       ),
